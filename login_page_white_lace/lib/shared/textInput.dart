@@ -20,6 +20,7 @@ class TextinputPers extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         prefixIcon: Icon(icon),
+        
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(40),
           borderSide: BorderSide.none,
