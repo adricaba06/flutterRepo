@@ -11,11 +11,11 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
     on<LoadPopularMovies>((event, emit) async {
       emit(PopularMovieLoading());
       try {
-        var apiMoviedb = await movieService.getList(event.listType);
+        var apiMoviedb = await movieService.getList(MovieListType.popular);
         emit(PopularMovieSuccess(movieList: apiMoviedb));
       } catch (e) {
         emit(PopularMovieError(message: e.toString()));
       }
-    });
+    });      
   }
 }

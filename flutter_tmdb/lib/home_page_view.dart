@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tmdb/core/services/movie_service.dart';
 import 'package:flutter_tmdb/features/bloc/popular_movies_bloc.dart';
 
 class HomePageView extends StatefulWidget {
@@ -10,51 +11,45 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  late PopularMoviesBloc popularMoviesBloc;
+
+
+  @override
+  void initState(){
+    super.initState();
+    popularMoviesBloc = PopularMoviesBloc(MovieService())..add(LoadPopularMovies());
+  }
+
+   @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Movies')),
       body: BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
+        bloc:PopularMoviesBloc,
         builder: (context, state) {
           if (state is PopularMovieLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is PopularMovieSuccess) {
-            final movies = state.movieList;
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: movies.length,
-              itemBuilder: (context, index) {
-                final movie = movies[index];
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey[50],
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    movie.title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                );
-              },
+            return Expanded(
+              child: ListView.builder(
+                itemCount: state.movieList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(title: Text(state.movieList[index].title));
+                },
+              ),
             );
           } else if (state is PopularMovieError) {
             return Center(child: Text(state.message));
           }
-          return const SizedBox();
+          return const Center(child: CircularProgressIndicator());
         },
-      ),
+      )
     );
   }
 }
