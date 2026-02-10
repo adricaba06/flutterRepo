@@ -14,11 +14,10 @@ class BottomSheetComponnet extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return SizedBox(
-                height: 900,
+                height: 960,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       const Text('Modal BottomSheet'),
                       MyCustomForm(),

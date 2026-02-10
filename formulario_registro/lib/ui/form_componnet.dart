@@ -24,9 +24,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Username
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -35,10 +37,18 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
                 labelText: 'Username',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                prefixIcon: const Icon(Icons.person),
               ),
             ),
+            const SizedBox(height: 16),
+
+            // Surname
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -47,14 +57,21 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
                 labelText: 'Surname',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                prefixIcon: const Icon(Icons.badge),
               ),
             ),
-            SizedBox(height: 25),
+            const SizedBox(height: 16),
+
+            // Dropdown
             DropdownMenu<String>(
-              width: 400,
-              hintText: 'Seleccione su genero',
+              width: double.infinity,
+              hintText: 'Seleccione su género',
               dropdownMenuEntries: sexos
                   .map(
                     (sexo) => DropdownMenuEntry(
@@ -64,13 +81,14 @@ class _MyCustomFormState extends State<MyCustomForm> {
                   )
                   .toList(),
             ),
+            const SizedBox(height: 6),
 
+            // Email
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
                 }
-
                 if (!RegExp(
                   r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                 ).hasMatch(value)) {
@@ -79,15 +97,30 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
                 labelText: 'Email',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                prefixIcon: const Icon(Icons.email),
               ),
             ),
+            const SizedBox(height: 16),
 
+            // Password
             TextFormField(
               controller: _passwordController,
               obscureText: true,
-              decoration: const InputDecoration(labelText: 'Contraseña'),
+              decoration: InputDecoration(
+                labelText: 'Contraseña',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                prefixIcon: const Icon(Icons.lock),
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Ingresa una contraseña';
@@ -98,12 +131,20 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
             ),
+            const SizedBox(height: 16),
 
+            // Confirm Password
             TextFormField(
               controller: _confirmPasswordController,
               obscureText: true,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Confirmar contraseña',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                prefixIcon: const Icon(Icons.lock_outline),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -115,8 +156,17 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 return null;
               },
             ),
+            const SizedBox(height: 4),
 
+            // Submit Button
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: const Color.fromARGB(255, 236, 255, 68),
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -124,7 +174,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
                   );
                 }
               },
-              child: const Text('Submit'),
+              child: const Text('Submit', style: TextStyle(fontSize: 16)),
             ),
           ],
         ),
